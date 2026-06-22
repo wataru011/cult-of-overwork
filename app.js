@@ -9,6 +9,16 @@
     "lover",
     "doom",
     "expression",
+    "revenge",
+    "companylove",
+    "familylove",
+    "lonewolf",
+    "blackhole",
+    "whitehole",
+    "seeker",
+    "king",
+    "elf",
+    "timetraveler",
   ];
 
   const state = {
@@ -169,7 +179,10 @@
 
   function renderBars(scores) {
     const max = Math.max(1, ...TYPE_ORDER.map((id) => scores[id]));
-    const sorted = [...TYPE_ORDER].sort((a, b) => scores[b] - scores[a]);
+    // 全16タイプは多いので、得点上位6タイプのみ表示する
+    const sorted = [...TYPE_ORDER]
+      .sort((a, b) => scores[b] - scores[a])
+      .slice(0, 6);
     const box = document.getElementById("result-bars");
     box.innerHTML = sorted
       .map((id) => {
