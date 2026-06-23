@@ -394,57 +394,79 @@ function cornerOrnament(x, y, accent) {
   </g>`;
 }
 
+// 大地（地平線）— タロット絵画的な接地
+function ground(aura, color) {
+  const a = AURA[aura];
+  const top = "#0a0716";
+  return `
+    <path d="M0 760 Q 300 700 600 760 L600 900 L0 900 Z" fill="${top}"/>
+    <path d="M0 760 Q 300 700 600 760" fill="none" stroke="${a.accent}" stroke-width="2" opacity="0.45"/>
+    <path d="M0 812 Q 300 768 600 812 L600 900 L0 900 Z" fill="#000" opacity="0.35"/>
+    <g fill="${color}" opacity="0.3">
+      <circle cx="120" cy="792" r="3"/><circle cx="300" cy="772" r="3"/><circle cx="470" cy="792" r="3"/>
+    </g>`;
+}
+
+// 天空の象徴（神々しい=太陽光輪／禍々しい=血の月／神秘=月と環）
+function celestial(aura, color) {
+  const a = AURA[aura];
+  if (aura === "ominous") {
+    return `<g opacity="0.9">
+      <circle cx="${CX}" cy="${CY}" r="172" fill="#1a0710"/>
+      <circle cx="${CX}" cy="${CY}" r="172" fill="${color}" opacity="0.16"/>
+      <circle cx="${CX}" cy="${CY}" r="172" fill="none" stroke="${a.accent}" stroke-width="2" opacity="0.55"/>
+    </g>`;
+  }
+  if (aura === "mystic") {
+    return `<g opacity="0.95">
+      <circle cx="${CX}" cy="${CY}" r="176" fill="#0a1030"/>
+      <ellipse cx="${CX}" cy="${CY}" rx="210" ry="176" fill="none" stroke="${a.accent}" stroke-width="1.5" opacity="0.4" transform="rotate(20 ${CX} ${CY})"/>
+      <circle cx="${CX}" cy="${CY}" r="176" fill="none" stroke="${a.accent}" stroke-width="1.5" opacity="0.5"/>
+    </g>`;
+  }
+  // divine: 後光
+  return `<g opacity="0.95">
+    <circle cx="${CX}" cy="${CY}" r="176" fill="#140f33"/>
+    <circle cx="${CX}" cy="${CY}" r="176" fill="${color}" opacity="0.12"/>
+    <circle cx="${CX}" cy="${CY}" r="176" fill="none" stroke="${a.accent}" stroke-width="2" opacity="0.5"/>
+    <circle cx="${CX}" cy="${CY}" r="188" fill="none" stroke="${a.accent}" stroke-width="1" opacity="0.3"/>
+  </g>`;
+}
+
 function card(cfg) {
   const a = AURA[cfg.aura];
   const seed = hash(cfg.id);
-  // 名前が長い場合はフォントを縮める
-  const nameLen = cfg.name.length;
-  const nameSize = nameLen > 10 ? 27 : nameLen > 7 ? 33 : 40;
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" font-family="${FONT}">
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">
   <defs>
-    <radialGradient id="bg" cx="50%" cy="42%" r="75%">
+    <radialGradient id="bg" cx="50%" cy="40%" r="78%">
       <stop offset="0%" stop-color="${a.bg0}"/>
       <stop offset="100%" stop-color="${a.bg1}"/>
     </radialGradient>
     <radialGradient id="glow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="${cfg.color}" stop-opacity="0.55"/>
+      <stop offset="0%" stop-color="${cfg.color}" stop-opacity="0.6"/>
+      <stop offset="55%" stop-color="${cfg.color}" stop-opacity="0.12"/>
       <stop offset="100%" stop-color="${cfg.color}" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="vig" cx="50%" cy="46%" r="72%">
+      <stop offset="62%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.55"/>
     </radialGradient>
   </defs>
 
-  <rect width="${W}" height="${H}" rx="26" fill="url(#bg)"/>
+  <rect width="${W}" height="${H}" fill="url(#bg)"/>
   ${starfield(seed)}
   ${rays(cfg.aura)}
-  <circle cx="${CX}" cy="${CY}" r="200" fill="url(#glow)"/>
+  <circle cx="${CX}" cy="${CY}" r="230" fill="url(#glow)"/>
+  ${celestial(cfg.aura, cfg.color)}
+  ${ground(cfg.aura, cfg.color)}
 
-  <!-- 中央メダリオン -->
-  <circle cx="${CX}" cy="${CY}" r="150" fill="#0b0820" opacity="0.55"/>
-  ${halo(cfg.aura, cfg.color)}
-  ${E[cfg.emblem](cfg.color, a.accent)}
-
-  <!-- ローマ数字の銘板 -->
-  <g>
-    <rect x="240" y="74" width="120" height="46" rx="10" fill="#0b0820" opacity="0.6" stroke="${a.accent}" stroke-width="1.5"/>
-    <text x="${CX}" y="106" text-anchor="middle" font-size="26" letter-spacing="3" fill="${a.accent}" font-weight="700">${cfg.roman}</text>
+  <!-- 象徴のイラスト（大きめに） -->
+  <g transform="translate(${CX} ${CY}) scale(1.42) translate(${-CX} ${-CY})">
+    ${E[cfg.emblem](cfg.color, a.accent)}
   </g>
 
-  <!-- 下部バナー -->
-  <g>
-    <path d="M70 792 L530 792 L512 836 L530 880 L70 880 L88 836 Z" fill="#0b0820" opacity="0.72" stroke="${a.accent}" stroke-width="1.5"/>
-    <text x="${CX}" y="838" text-anchor="middle" font-size="${nameSize}" font-weight="900" fill="#fff">${esc(
-    cfg.name
-  )}</text>
-    <text x="${CX}" y="866" text-anchor="middle" font-size="15" letter-spacing="4" fill="${a.accent}" font-weight="700">${cfg.sub}</text>
-  </g>
-
-  <!-- 装飾枠 -->
-  <rect x="20" y="20" width="${W - 40}" height="${H - 40}" rx="18" fill="none" stroke="${a.accent}" stroke-width="3"/>
-  <rect x="32" y="32" width="${W - 64}" height="${H - 64}" rx="12" fill="none" stroke="${a.accent}" stroke-width="1" opacity="0.5"/>
-  ${cornerOrnament(44, 44, a.accent)}
-  ${cornerOrnament(W - 44, 44, a.accent)}
-  ${cornerOrnament(44, H - 44, a.accent)}
-  ${cornerOrnament(W - 44, H - 44, a.accent)}
+  <rect width="${W}" height="${H}" fill="url(#vig)"/>
 </svg>`;
 }
 
@@ -461,18 +483,17 @@ function ogp() {
   const feat = ["doom", "king", "whitehole"].map((id) =>
     CARDS.find((c) => c.id === id)
   );
-  // 中央に3枚のカードを扇状に
+  // 中央に3つの象徴イラストを並べる（枠なし）
   let deck = "";
-  const angles = [-14, 0, 14];
-  const xs = [430, 600, 770];
+  const xs = [392, 600, 808];
   feat.forEach((c, i) => {
     const ca = AURA[c.aura];
-    deck += `<g transform="translate(${xs[i]} 330) rotate(${angles[i]}) scale(0.34)">
-      <rect x="-300" y="-450" width="600" height="900" rx="26" fill="${ca.bg1}" stroke="${ca.accent}" stroke-width="6"/>
-      <g transform="translate(-300 -450)">
-        <circle cx="${CX}" cy="${CY}" r="190" fill="url(#g${i})"/>
+    deck += `<g transform="translate(${xs[i]} 318) scale(0.5)">
+      <g transform="translate(-300 -392)">
+        <circle cx="${CX}" cy="${CY}" r="232" fill="url(#g${i})"/>
+        <circle cx="${CX}" cy="${CY}" r="174" fill="${ca.bg1}" opacity="0.8"/>
+        <circle cx="${CX}" cy="${CY}" r="174" fill="none" stroke="${ca.accent}" stroke-width="3" opacity="0.55"/>
         ${E[c.emblem](c.color, ca.accent)}
-        <circle cx="${CX}" cy="${CY}" r="150" fill="none" stroke="${c.color}" stroke-width="4" opacity="0.8"/>
       </g>
     </g>`;
   });
