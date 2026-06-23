@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>長時間労働診断 — あなたはどの長時間労働タイプ？</title>
+  <meta name="description" content="16の質問に答えて、あなたの「長時間労働タイプ」を診断。全16タイプ。自己犠牲タイプ？破滅タイプ？王タイプ？MBTI風の働き方タイプ診断。" />
+  <meta property="og:title" content="長時間労働診断" />
+  <meta property="og:description" content="あなたはどの長時間労働タイプ？12の質問でわかる働き方タイプ診断。" />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app">
+    <!-- スタート画面 -->
+    <section id="screen-start" class="screen is-active">
+      <div class="card start-card">
+        <div class="badge">WORK STYLE TYPE</div>
+        <h1 class="title">長時間労働<span>診断</span></h1>
+        <p class="subtitle">あなたはどの「長時間労働タイプ」？<br />16の質問に答えて、全16タイプから診断。</p>
+        <ul class="type-preview" id="type-preview"></ul>
+        <button class="btn btn-primary" id="start-btn">診断をはじめる</button>
+        <p class="note">※ この診断は娯楽目的のものです。心身の不調を感じる方は、無理をせず専門の窓口にご相談ください。</p>
+      </div>
+    </section>
+
+    <!-- 質問画面 -->
+    <section id="screen-quiz" class="screen">
+      <div class="quiz-head">
+        <div class="progress">
+          <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <div class="progress-text">
+          <span id="q-current">1</span> / <span id="q-total">12</span>
+        </div>
+      </div>
+      <div class="card quiz-card">
+        <p class="q-text" id="q-text">質問テキスト</p>
+        <div class="options" id="options"></div>
+      </div>
+      <button class="btn btn-ghost" id="back-btn">← 前の質問へ</button>
+    </section>
+
+    <!-- 集計中アニメーション -->
+    <section id="screen-loading" class="screen">
+      <div class="card loading-card">
+        <div class="spinner"></div>
+        <p class="loading-text">あなたの働き方を解析中…</p>
+      </div>
+    </section>
+
+    <!-- 結果画面 -->
+    <section id="screen-result" class="screen">
+      <div class="card result-card" id="result-card">
+        <div class="result-emoji" id="result-emoji">🔥</div>
+        <p class="result-label">あなたは…</p>
+        <h2 class="result-name" id="result-name">タイプ名</h2>
+        <p class="result-catch" id="result-catch">キャッチコピー</p>
+
+        <div class="result-bars" id="result-bars"></div>
+
+        <p class="result-desc" id="result-desc"></p>
+
+        <div class="result-cols">
+          <div class="result-block">
+            <h3>💪 強み</h3>
+            <ul id="result-strengths"></ul>
+          </div>
+          <div class="result-block">
+            <h3>⚠️ 注意したいこと</h3>
+            <ul id="result-risks"></ul>
+          </div>
+        </div>
+
+        <div class="result-advice">
+          <h3>📮 あなたへのひとこと</h3>
+          <p id="result-advice"></p>
+        </div>
+
+        <div class="result-compatible" id="result-compatible"></div>
+
+        <div class="result-actions">
+          <button class="btn btn-primary" id="share-btn">結果をシェアする</button>
+          <button class="btn btn-ghost" id="retry-btn">もう一度診断する</button>
+        </div>
+        <p class="copied-toast" id="copied-toast">結果をコピーしました！</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>長時間労働診断 — Work Style Type Quiz</p>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
