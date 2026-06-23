@@ -124,7 +124,7 @@
   function pickWinner(scores) {
     // 最高得点。同点なら設問での選択が早かった順（出現順）で決める。
     let best = null;
-    let bestScore = -1;
+    let bestScore = -Infinity;
     TYPE_ORDER.forEach((id) => {
       if (scores[id] > bestScore) {
         bestScore = scores[id];
@@ -154,7 +154,7 @@
 
     const img = document.getElementById("result-image");
     img.src = "cards/" + winnerId + ".svg";
-    img.alt = t.name + "のタロットカード";
+    img.alt = t.name + "のイメージ";
     document.getElementById("result-name").textContent = t.name;
     document.getElementById("result-catch").textContent = "“" + t.catch + "”";
     document.getElementById("result-desc").textContent = t.description;

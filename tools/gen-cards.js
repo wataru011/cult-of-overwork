@@ -1,6 +1,6 @@
 /**
- * タロットカード風 SVG ジェネレータ
- * 16タイプ分のカード(cards/<id>.svg) と OGP(ogp.svg) を生成する。
+ * タイプ別シンボル SVG ジェネレータ
+ * 16タイプ分のシンボル画像(cards/<id>.svg) と OGP(ogp.svg) を生成する。
  * 実行: node tools/gen-cards.js
  */
 const fs = require("fs");
@@ -394,7 +394,7 @@ function cornerOrnament(x, y, accent) {
   </g>`;
 }
 
-// 大地（地平線）— タロット絵画的な接地
+// 大地（地平線）— 絵画的な接地
 function ground(aura, color) {
   const a = AURA[aura];
   const top = "#0a0716";
