@@ -38,6 +38,7 @@
     quiz: document.getElementById("screen-quiz"),
     loading: document.getElementById("screen-loading"),
     result: document.getElementById("screen-result"),
+    types: document.getElementById("screen-types"),
   };
 
   function showScreen(name) {
@@ -63,6 +64,32 @@
     document.getElementById("retry-btn").addEventListener("click", startQuiz);
     document.getElementById("back-btn").addEventListener("click", goBack);
     document.getElementById("share-btn").addEventListener("click", share);
+    document.getElementById("show-types-btn").addEventListener("click", openTypes);
+    document
+      .getElementById("back-to-result-btn")
+      .addEventListener("click", () => showScreen("result"));
+  }
+
+  /* ---------- types list ---------- */
+  function openTypes() {
+    renderTypesList();
+    showScreen("types");
+  }
+
+  function renderTypesList() {
+    const curId = state._lastType ? state._lastType.id : null;
+    const box = document.getElementById("types-list");
+    box.innerHTML = TYPE_ORDER.map((id) => {
+      const t = TYPES[id];
+      const cls = "type-item" + (id === curId ? " is-current" : "");
+      const badge = id === curId ? '<span class="type-you">YOU</span>' : "";
+      return (
+        `<div class="${cls}">` +
+        `<span class="type-emoji">${t.emoji}</span>` +
+        `<div class="type-info"><div class="type-name">${t.name}${badge}</div>` +
+        `<div class="type-catch">${t.catch}</div></div></div>`
+      );
+    }).join("");
   }
 
   function startQuiz() {

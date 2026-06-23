@@ -35,21 +35,14 @@
   <!-- 象徴のイラスト（大きめに） -->
   <g transform="translate(300 392) scale(1.42) translate(-300 -392)">
     
-    <circle cx="300" cy="392" r="60" fill="#ff5b53" opacity="0.18"/>
-    <g transform="rotate(28 300 392)">
-      <line x1="300" y1="296" x2="300" y2="462" stroke="#dfe3ea" stroke-width="9"/>
-      <polygon points="295,296 305,296 300,274" fill="#dfe3ea"/>
-      <line x1="274" y1="462" x2="326" y2="462" stroke="#ff3b4e" stroke-width="8"/>
-      <line x1="300" y1="462" x2="300" y2="488" stroke="#ff3b4e" stroke-width="9"/>
-      <circle cx="300" cy="492" r="7" fill="#ff3b4e"/>
-    </g><g transform="rotate(-28 300 392)">
-      <line x1="300" y1="296" x2="300" y2="462" stroke="#dfe3ea" stroke-width="9"/>
-      <polygon points="295,296 305,296 300,274" fill="#dfe3ea"/>
-      <line x1="274" y1="462" x2="326" y2="462" stroke="#ff3b4e" stroke-width="8"/>
-      <line x1="300" y1="462" x2="300" y2="488" stroke="#ff3b4e" stroke-width="9"/>
-      <circle cx="300" cy="492" r="7" fill="#ff3b4e"/>
-    </g>
-    <path d="M292 322 q 8 14 0 28 q -8 -14 0 -28 Z" fill="#ff3b4e" opacity="0.9"/>
+    <path d="M300 298 C 348 358, 360 396, 332 450 C 326 414, 308 406, 312 378
+    C 286 406, 268 434, 282 468 C 236 446, 236 388, 282 348
+    C 276 380, 296 388, 296 366 C 296 340, 300 318, 300 298 Z" fill="#ff5b53" opacity="0.95"/>
+    <path d="M300 298 C 348 358, 360 396, 332 450 C 326 414, 308 406, 312 378
+    C 286 406, 268 434, 282 468 C 236 446, 236 388, 282 348
+    C 276 380, 296 388, 296 366 C 296 340, 300 318, 300 298 Z" fill="none" stroke="#ff3b4e" stroke-width="2.5"/>
+    <path d="M300 360 C 322 392, 328 418, 308 448 C 304 422, 296 416, 298 396
+    C 286 414, 282 432, 292 452 C 270 436, 272 406, 298 386 Z" fill="#fff" opacity="0.5"/>
   </g>
 
   <rect width="600" height="900" fill="url(#vig)"/>

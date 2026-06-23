@@ -364,16 +364,92 @@ E.clock = (c, a) => {
     <circle cx="${CX + 118}" cy="${CY - 40}" r="9" fill="${a}" opacity="0.9"/>`;
 };
 
+// 無休労働理想主義者：休まず昇り続ける太陽（労働の理想郷）
+E.sun = (c, a) => {
+  let beams = "";
+  for (let i = 0; i < 16; i++) {
+    const ang = (Math.PI * 2 * i) / 16;
+    const x1 = CX + Math.cos(ang) * 70,
+      y1 = CY + Math.sin(ang) * 70;
+    const len = i % 2 ? 130 : 112;
+    const x2 = CX + Math.cos(ang) * len,
+      y2 = CY + Math.sin(ang) * len;
+    beams += `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(
+      1
+    )}" y2="${y2.toFixed(1)}" stroke="${a}" stroke-width="${
+      i % 2 ? 4 : 6
+    }" stroke-linecap="round"/>`;
+  }
+  return `
+    ${beams}
+    <circle cx="${CX}" cy="${CY}" r="62" fill="${c}" opacity="0.9"/>
+    <circle cx="${CX}" cy="${CY}" r="62" fill="none" stroke="${a}" stroke-width="3"/>
+    <circle cx="${CX}" cy="${CY}" r="44" fill="#fff" opacity="0.85"/>`;
+};
+
+// 復讐：すべてを焼き尽くす炎
+E.flame = (c, a) => {
+  const flame = `M300 298 C 348 358, 360 396, 332 450 C 326 414, 308 406, 312 378
+    C 286 406, 268 434, 282 468 C 236 446, 236 388, 282 348
+    C 276 380, 296 388, 296 366 C 296 340, 300 318, 300 298 Z`;
+  const inner = `M300 360 C 322 392, 328 418, 308 448 C 304 422, 296 416, 298 396
+    C 286 414, 282 432, 292 452 C 270 436, 272 406, 298 386 Z`;
+  return `
+    <path d="${flame}" fill="${c}" opacity="0.95"/>
+    <path d="${flame}" fill="none" stroke="${a}" stroke-width="2.5"/>
+    <path d="${inner}" fill="#fff" opacity="0.5"/>`;
+};
+
+// 企業戦士：ビルと剣
+E.corp_warrior = (c, a) => {
+  return `
+    <rect x="262" y="332" width="76" height="150" rx="4" fill="${c}" opacity="0.30" stroke="${c}" stroke-width="3"/>
+    <polygon points="258,332 342,332 300,304" fill="${a}" opacity="0.9"/>
+    <g fill="${a}" opacity="0.85">
+      <rect x="276" y="350" width="12" height="16" rx="2"/><rect x="312" y="350" width="12" height="16" rx="2"/>
+      <rect x="276" y="380" width="12" height="16" rx="2"/><rect x="312" y="380" width="12" height="16" rx="2"/>
+      <rect x="276" y="410" width="12" height="16" rx="2"/><rect x="312" y="410" width="12" height="16" rx="2"/>
+    </g>
+    <line x1="${CX}" y1="298" x2="${CX}" y2="478" stroke="#dfe3ea" stroke-width="9"/>
+    <polygon points="${CX - 5},298 ${CX + 5},298 ${CX},276" fill="#dfe3ea"/>
+    <line x1="${CX - 30}" y1="446" x2="${CX + 30}" y2="446" stroke="${a}" stroke-width="9"/>
+    <circle cx="${CX}" cy="486" r="8" fill="${a}"/>`;
+};
+
+// アウトロー：禁止スラッシュをかけた時計（法定労働時間・記録を無視）
+E.no_clock = (c, a) => {
+  let ticks = "";
+  for (let i = 0; i < 12; i++) {
+    const ang = (Math.PI * 2 * i) / 12 - Math.PI / 2;
+    const x1 = CX + Math.cos(ang) * 72,
+      y1 = CY + Math.sin(ang) * 72;
+    const x2 = CX + Math.cos(ang) * 84,
+      y2 = CY + Math.sin(ang) * 84;
+    ticks += `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(
+      1
+    )}" y2="${y2.toFixed(1)}" stroke="${a}" stroke-width="3"/>`;
+  }
+  return `
+    <circle cx="${CX}" cy="${CY}" r="84" fill="${c}" opacity="0.18"/>
+    <circle cx="${CX}" cy="${CY}" r="84" fill="none" stroke="${a}" stroke-width="3"/>
+    ${ticks}
+    <line x1="${CX}" y1="${CY}" x2="${CX}" y2="${CY - 46}" stroke="#fff" stroke-width="6" stroke-linecap="round"/>
+    <line x1="${CX}" y1="${CY}" x2="${CX + 40}" y2="${CY + 16}" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="${CX}" cy="${CY}" r="7" fill="${a}"/>
+    <circle cx="${CX}" cy="${CY}" r="116" fill="none" stroke="#ff3b4e" stroke-width="12" opacity="0.92"/>
+    <line x1="${CX - 82}" y1="${CY - 82}" x2="${CX + 82}" y2="${CY + 82}" stroke="#ff3b4e" stroke-width="12" opacity="0.92" stroke-linecap="round"/>`;
+};
+
 /* ---------- タイプ定義（順序は TYPE_ORDER と一致） ---------- */
 const CARDS = [
   { id: "sacrifice", name: "自己犠牲タイプ", sub: "THE MARTYR", color: "#7da2ff", aura: "divine", emblem: "heart_bandage", roman: "I" },
   { id: "service", name: "社会奉仕タイプ", sub: "THE SERVANT", color: "#3fe0a0", aura: "divine", emblem: "globe", roman: "II" },
-  { id: "dream", name: "夢実現タイプ", sub: "THE DREAMER", color: "#ffc24b", aura: "divine", emblem: "shooting_star", roman: "III" },
-  { id: "lover", name: "長時間労働が好きすぎるタイプ", sub: "THE ZEALOT", color: "#ff77ab", aura: "ominous", emblem: "flame_heart", roman: "IV" },
+  { id: "dream", name: "無休労働理想主義者タイプ", sub: "THE UTOPIAN", color: "#ffc24b", aura: "divine", emblem: "sun", roman: "III" },
+  { id: "lover", name: "ガチ恋タイプ", sub: "THE DEVOTEE", color: "#ff77ab", aura: "ominous", emblem: "flame_heart", roman: "IV" },
   { id: "doom", name: "破滅タイプ", sub: "RUIN", color: "#b478ff", aura: "ominous", emblem: "skull", roman: "V" },
   { id: "expression", name: "自己表現タイプ", sub: "THE ARTIST", color: "#3fd3e0", aura: "mystic", emblem: "prism", roman: "VI" },
-  { id: "revenge", name: "復讐タイプ", sub: "VENGEANCE", color: "#ff5b53", aura: "ominous", emblem: "swords", roman: "VII" },
-  { id: "companylove", name: "会社愛タイプ", sub: "DEVOTION", color: "#5b91ff", aura: "divine", emblem: "tower", roman: "VIII" },
+  { id: "revenge", name: "復讐タイプ", sub: "VENGEANCE", color: "#ff5b53", aura: "ominous", emblem: "flame", roman: "VII" },
+  { id: "companylove", name: "企業戦士タイプ", sub: "THE CORPORATE SOLDIER", color: "#5b91ff", aura: "divine", emblem: "corp_warrior", roman: "VIII" },
   { id: "familylove", name: "家族愛タイプ", sub: "THE GUARDIAN", color: "#ffa05b", aura: "divine", emblem: "house_heart", roman: "IX" },
   { id: "lonewolf", name: "一匹狼タイプ", sub: "THE LONE WOLF", color: "#8aa0bd", aura: "ominous", emblem: "wolf", roman: "X" },
   { id: "blackhole", name: "ブラックホールタイプ", sub: "THE VOID", color: "#9b8cff", aura: "ominous", emblem: "void", roman: "XI" },
@@ -381,7 +457,7 @@ const CARDS = [
   { id: "seeker", name: "求道者タイプ", sub: "THE SEEKER", color: "#c2a37a", aura: "mystic", emblem: "mountain", roman: "XIII" },
   { id: "king", name: "王タイプ", sub: "THE KING", color: "#ffd54a", aura: "divine", emblem: "crown", roman: "XIV" },
   { id: "elf", name: "エルフタイプ", sub: "THE ELF", color: "#52d98a", aura: "mystic", emblem: "tree", roman: "XV" },
-  { id: "timetraveler", name: "時間旅行者タイプ", sub: "THE TRAVELER", color: "#7b7bff", aura: "mystic", emblem: "clock", roman: "XVI" },
+  { id: "timetraveler", name: "アウトロータイプ", sub: "THE OUTLAW", color: "#7b7bff", aura: "mystic", emblem: "no_clock", roman: "XVI" },
 ];
 
 const FONT =
