@@ -1,10 +1,10 @@
 name: Deploy to GitHub Pages
 
 on:
-  # このブランチへの push で自動デプロイ
+  # main への push で自動デプロイ（github-pages 環境はデフォルトブランチを許可）
   push:
     branches:
-      - claude/overwork-type-quiz-pjhp0k
+      - main
   # 手動実行も可能
   workflow_dispatch:
 
