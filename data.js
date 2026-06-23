@@ -285,45 +285,185 @@ const TYPES = {
 };
 
 /**
- * 設問設計（5段階回答）:
- * 各設問は1つのタイプを象徴するステートメント。
- * 「とてもそう思う(+2)〜まったくそう思わない(-2)」の5段階で回答し、
- * そう思うほどそのタイプへの加点が大きくなる。
- * 全16タイプぶんのステートメントを TYPE_ORDER の順に1問ずつ用意。
+ * 設問の循環設計:
+ * 16タイプを TYPE_SEQ の順に並べ、設問 q は TYPE_SEQ[q..q+5] の6タイプを扱う。
+ * 各タイプはちょうど6問に登場し、自分が先頭(シグネチャー)になる1問で3点、他は2点。
  */
-const SCALE_OPTIONS = [
-  { label: "とてもそう思う", value: 2 },
-  { label: "ややそう思う", value: 1 },
-  { label: "どちらともいえない", value: 0 },
-  { label: "あまりそう思わない", value: -1 },
-  { label: "まったくそう思わない", value: -2 },
-];
-
-function scaleQuestion(type, statement) {
-  return {
-    q: statement,
-    options: SCALE_OPTIONS.map((o) => ({
-      label: o.label,
-      scores: { [type]: o.value },
-    })),
-  };
-}
-
 const QUESTIONS = [
-  scaleQuestion("sacrifice", "自分さえ我慢すれば、まわりのみんなが楽になると思う。"),
-  scaleQuestion("service", "自分の仕事は、世の中や誰かの役に立っていると感じる。"),
-  scaleQuestion("dream", "今がんばれば、理想の自分に近づけるという手応えがある。"),
-  scaleQuestion("lover", "働いているときが、いちばん自分らしいと感じる。"),
-  scaleQuestion("doom", "終わらせないと不安で、つい限界まで頑張ってしまう。"),
-  scaleQuestion("expression", "納得のいくクオリティになるまで、とことん時間をかけたい。"),
-  scaleQuestion("revenge", "「今に見てろ」という悔しさが、仕事の原動力になっている。"),
-  scaleQuestion("companylove", "会社は、自分にとって第二の我が家のような存在だ。"),
-  scaleQuestion("familylove", "大切な家族のために働いている、という実感がある。"),
-  scaleQuestion("lonewolf", "人に頼るより、自分でやり切るほうが速いと思う。"),
-  scaleQuestion("blackhole", "気づくと、あらゆる仕事が自分のところに集まってくる。"),
-  scaleQuestion("whitehole", "次から次へとアイデアが湧いてきて、止まらない。"),
-  scaleQuestion("seeker", "仕事は終わりなき修行であり、技を極め続けたい。"),
-  scaleQuestion("king", "自分が率いる人たちのために、決断し導く役割を担っている。"),
-  scaleQuestion("elf", "締め切りに動じず、長い時間軸で淡々と働ける。"),
-  scaleQuestion("timetraveler", "常に数手先の未来を見据えて、先回りして動いている。"),
+  {
+    q: "あなたが残業してしまう、いちばんの理由は？",
+    options: [
+      { label: "自分がやらないと誰かが困るから", scores: { sacrifice: 3 } },
+      { label: "この仕事には大きな意義があるから", scores: { service: 2 } },
+      { label: "目標達成にまだ届いていないから", scores: { dream: 2 } },
+      { label: "気づいたら時間が経ってる。楽しいから", scores: { lover: 2 } },
+      { label: "終わらせないと不安で帰れないから", scores: { doom: 2 } },
+      { label: "納得いくクオリティになるまで粘りたいから", scores: { expression: 2 } },
+    ],
+  },
+  {
+    q: "仕事中、つい口に出してしまう言葉は？",
+    options: [
+      { label: "「これ、世の中のためになるよね」", scores: { service: 3 } },
+      { label: "「絶対やってやる」", scores: { dream: 2 } },
+      { label: "「いやー仕事最高」", scores: { lover: 2 } },
+      { label: "「大丈夫、まだいける…」", scores: { doom: 2 } },
+      { label: "「いや、ここはこうじゃない」", scores: { expression: 2 } },
+      { label: "「今に見てろよ…」", scores: { revenge: 2 } },
+    ],
+  },
+  {
+    q: "あなたの仕事のエンジン（原動力）は？",
+    options: [
+      { label: "理想の自分に近づく手応え", scores: { dream: 3 } },
+      { label: "働くこと自体のワクワク感", scores: { lover: 2 } },
+      { label: "評価が下がることへの恐怖", scores: { doom: 2 } },
+      { label: "自分を表現できる喜び", scores: { expression: 2 } },
+      { label: "見返してやるという反骨心", scores: { revenge: 2 } },
+      { label: "大好きな会社への貢献", scores: { companylove: 2 } },
+    ],
+  },
+  {
+    q: "貴重な休日、気づけば何をしている？",
+    options: [
+      { label: "そわそわして、つい仕事を開いてしまう", scores: { lover: 3 } },
+      { label: "気力が尽きて一日中寝ている", scores: { doom: 2 } },
+      { label: "趣味や創作に没頭している", scores: { expression: 2 } },
+      { label: "ライバルに差をつける自主練", scores: { revenge: 2 } },
+      { label: "会社のイベントや勉強会に顔を出す", scores: { companylove: 2 } },
+      { label: "家族との時間を全力で味わう", scores: { familylove: 2 } },
+    ],
+  },
+  {
+    q: "終電を逃した瞬間、最初に思うことは？",
+    options: [
+      { label: "……あれ、もう何も感じない", scores: { doom: 3 } },
+      { label: "せっかくだし、とことん仕上げよう", scores: { expression: 2 } },
+      { label: "この差が、いつか効いてくる", scores: { revenge: 2 } },
+      { label: "会社のためなら、苦じゃない", scores: { companylove: 2 } },
+      { label: "家族に連絡だけ入れておこう", scores: { familylove: 2 } },
+      { label: "誰にも邪魔されず捗るな", scores: { lonewolf: 2 } },
+    ],
+  },
+  {
+    q: "同僚から見た、あなたの印象は？",
+    options: [
+      { label: "こだわりが強いセンスの人", scores: { expression: 3 } },
+      { label: "何かに静かに燃えている人", scores: { revenge: 2 } },
+      { label: "誰よりも会社が好きな人", scores: { companylove: 2 } },
+      { label: "家庭を大事にする温かい人", scores: { familylove: 2 } },
+      { label: "群れない一匹狼", scores: { lonewolf: 2 } },
+      { label: "仕事が吸い込まれていく人", scores: { blackhole: 2 } },
+    ],
+  },
+  {
+    q: "深夜のオフィスで、ふと頭をよぎるのは？",
+    options: [
+      { label: "あいつにだけは負けたくない", scores: { revenge: 3 } },
+      { label: "この会社を、もっと大きくしたい", scores: { companylove: 2 } },
+      { label: "今日も寝顔を見られなかったな…", scores: { familylove: 2 } },
+      { label: "結局、自分が一番頼りになる", scores: { lonewolf: 2 } },
+      { label: "タスクが、また増えていく…", scores: { blackhole: 2 } },
+      { label: "次のアイデアが湧いてきた", scores: { whitehole: 2 } },
+    ],
+  },
+  {
+    q: "あなたにとって「会社」とは？",
+    options: [
+      { label: "第二の我が家", scores: { companylove: 3 } },
+      { label: "家族を養うための場所", scores: { familylove: 2 } },
+      { label: "たまたま所属している場所", scores: { lonewolf: 2 } },
+      { label: "あらゆる仕事が集まってくる場所", scores: { blackhole: 2 } },
+      { label: "自分の発想を放出する場所", scores: { whitehole: 2 } },
+      { label: "己を鍛える道場", scores: { seeker: 2 } },
+    ],
+  },
+  {
+    q: "何のために、そこまで働くの？",
+    options: [
+      { label: "大切な家族のため", scores: { familylove: 3 } },
+      { label: "誰にも縛られない自由のため", scores: { lonewolf: 2 } },
+      { label: "気づけば全部背負ってた…", scores: { blackhole: 2 } },
+      { label: "世界に何かを生み出すため", scores: { whitehole: 2 } },
+      { label: "技を極みに到達させるため", scores: { seeker: 2 } },
+      { label: "自分が率いる者たちのため", scores: { king: 2 } },
+    ],
+  },
+  {
+    q: "チームでの、あなたの立ち位置は？",
+    options: [
+      { label: "基本は単独行動", scores: { lonewolf: 3 } },
+      { label: "みんなのタスクの最終処理場", scores: { blackhole: 2 } },
+      { label: "アイデアを撒き散らす起点", scores: { whitehole: 2 } },
+      { label: "ひたすら腕を磨く職人", scores: { seeker: 2 } },
+      { label: "全体を統べるリーダー", scores: { king: 2 } },
+      { label: "時の流れに動じない長老", scores: { elf: 2 } },
+    ],
+  },
+  {
+    q: "机の上のタスクが一気に増えたとき、あなたは？",
+    options: [
+      { label: "「全部こっちに来い」と引き受ける", scores: { blackhole: 3 } },
+      { label: "どんどん人に振って回す", scores: { whitehole: 2 } },
+      { label: "一つひとつ丁寧に極める", scores: { seeker: 2 } },
+      { label: "采配して最適に配る", scores: { king: 2 } },
+      { label: "慌てず、悠久の時で構える", scores: { elf: 2 } },
+      { label: "先回りして未来で片付ける", scores: { timetraveler: 2 } },
+    ],
+  },
+  {
+    q: "あなたが場にもたらしているものは？",
+    options: [
+      { label: "尽きないアイデアとエネルギー", scores: { whitehole: 3 } },
+      { label: "磨き抜かれた確かな技術", scores: { seeker: 2 } },
+      { label: "進むべき方向と決断", scores: { king: 2 } },
+      { label: "どんな時も乱れない静けさ", scores: { elf: 2 } },
+      { label: "数手先を読む先見性", scores: { timetraveler: 2 } },
+      { label: "誰かを支える縁の下の力", scores: { sacrifice: 2 } },
+    ],
+  },
+  {
+    q: "仕事に向き合う姿勢を、一言でいうと？",
+    options: [
+      { label: "求道", scores: { seeker: 3 } },
+      { label: "統率", scores: { king: 2 } },
+      { label: "悠久", scores: { elf: 2 } },
+      { label: "先読み", scores: { timetraveler: 2 } },
+      { label: "献身", scores: { sacrifice: 2 } },
+      { label: "貢献", scores: { service: 2 } },
+    ],
+  },
+  {
+    q: "もし大きな決断を任されたら？",
+    options: [
+      { label: "迷わず引き受け、皆を導く", scores: { king: 3 } },
+      { label: "長い目で最善を見極める", scores: { elf: 2 } },
+      { label: "未来から逆算して決める", scores: { timetraveler: 2 } },
+      { label: "自分が泥をかぶる覚悟で決める", scores: { sacrifice: 2 } },
+      { label: "社会にとっての正しさで決める", scores: { service: 2 } },
+      { label: "理想に最も近づく道を選ぶ", scores: { dream: 2 } },
+    ],
+  },
+  {
+    q: "時間や締め切りとの付き合い方は？",
+    options: [
+      { label: "締め切り？時はゆるやかに流れる", scores: { elf: 3 } },
+      { label: "締め切りは逆算の起点にすぎない", scores: { timetraveler: 2 } },
+      { label: "自分の時間を削って間に合わせる", scores: { sacrifice: 2 } },
+      { label: "意義のためなら時間は惜しまない", scores: { service: 2 } },
+      { label: "目標から逆算して全力疾走", scores: { dream: 2 } },
+      { label: "楽しすぎて、つい時間を忘れる", scores: { lover: 2 } },
+    ],
+  },
+  {
+    q: "がんばった先に、いちばん見たい光景は？",
+    options: [
+      { label: "自分が変えた、より良い未来", scores: { timetraveler: 3 } },
+      { label: "笑顔で過ごす仲間や家族", scores: { sacrifice: 2 } },
+      { label: "自分の仕事で良くなった社会", scores: { service: 2 } },
+      { label: "夢を叶えて輝いている自分", scores: { dream: 2 } },
+      { label: "ずっと好きな仕事を続けられている毎日", scores: { lover: 2 } },
+      { label: "正直、まずはぐっすり眠りたい", scores: { doom: 2 } },
+    ],
+  },
 ];
