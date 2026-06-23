@@ -214,6 +214,9 @@
       `⚡ 一緒だとすれ違いやすい要注意タイプ<br><b>${incomp.emoji} ${incomp.name}</b>`;
 
     state._lastType = t;
+    // 画像つきシェア用に結果カードをPNG化しておく（対応ブラウザのみ）
+    state._shareFile = null;
+    buildShareFile(t);
   }
 
   function fillList(id, items) {
@@ -223,6 +226,29 @@
   }
 
   /* ---------- share ---------- */
+  // 結果カードSVGをPNG化して state._shareFile に保持（Web Share Level 2 用）
+  function buildShareFile(t) {
+    // ファイル添付シェア非対応ならスキップ（テキスト共有にフォールバック）
+    if (typeof navigator.canShare !== "function") return;
+    const img = new Image();
+    img.onload = function () {
+      try {
+        const canvas = document.createElement("canvas");
+        canvas.width = 600;
+        canvas.height = 900;
+        canvas.getContext("2d").drawImage(img, 0, 0, 600, 900);
+        canvas.toBlob(function (blob) {
+          if (!blob) return;
+          const file = new File([blob], t.id + ".png", { type: "image/png" });
+          if (navigator.canShare({ files: [file] })) state._shareFile = file;
+        }, "image/png");
+      } catch (e) {
+        /* 汚染等で失敗したらテキスト共有のまま */
+      }
+    };
+    img.src = "cards/" + t.id + ".svg";
+  }
+
   function share() {
     const t = state._lastType;
     if (!t) return;
@@ -230,6 +256,15 @@
     const text =
       `私の長時間労働タイプは「${t.emoji} ${t.name}」でした！\n` +
       `“${t.catch}”\n#長時間労働診断\n${url}`;
+
+    // 画像つきシェア（準備できていて対応している場合）
+    const file = state._shareFile;
+    if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+      navigator
+        .share({ title: "長時間労働診断", text: text, files: [file] })
+        .catch(() => {});
+      return;
+    }
 
     if (navigator.share) {
       navigator

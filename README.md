@@ -51,7 +51,7 @@ python3 -m http.server 8000
 | `index.html` | 画面構造（スタート / 質問 / 集計 / 結果） |
 | `styles.css` | スタイル・アニメーション |
 | `data.js` | タイプ定義と設問データ |
-| `app.js` | 診断ロジック・スコアリング・シェア |
+| `app.js` | 診断ロジック・スコアリング・シェア（対応ブラウザでは結果カード画像を添付） |
 | `cards/<id>.svg` | タイプ別のシンボル画像（結果画面に表示） |
 | `ogp.png` / `ogp.svg` | OGP画像（SNSシェア用） |
 | `tools/gen-cards.js` | カード・OGPを生成するスクリプト |
