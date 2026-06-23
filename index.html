@@ -31,6 +31,7 @@
         <p class="subtitle">あなたはどの「長時間労働タイプ」？<br />質問に答えて、あなたの働き方タイプを見つけよう。</p>
         <button class="btn btn-primary" id="start-btn">診断をはじめる</button>
         <p class="note">※ この診断は娯楽目的のものです。心身の不調を感じる方は、無理をせず専門の窓口にご相談ください。</p>
+        <p class="app-version" id="app-version"></p>
       </div>
     </section>
 
@@ -100,6 +101,8 @@
     <p>長時間労働診断 — Work Style Type Quiz</p>
   </footer>
 
+  <!-- デプロイ時に GitHub Actions が実際のバージョンへ置換する -->
+  <script>window.APP_VERSION = "BUILD_VERSION_PLACEHOLDER";</script>
   <script src="data.js"></script>
   <script src="app.js"></script>
 </body>

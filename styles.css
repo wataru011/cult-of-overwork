@@ -112,6 +112,13 @@ body {
   line-height: 1.7;
   color: #9aa0b5;
 }
+.app-version {
+  margin-top: 12px;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: #b3b8cc;
+  font-variant-numeric: tabular-nums;
+}
 
 /* ---------- buttons ---------- */
 .btn {
