@@ -21,6 +21,13 @@
     "timetraveler",
   ];
 
+  // 同点時のレア度ランク（小さいほどレア）。
+  // 基本6タイプより後発の個性派タイプを「レア」とみなし、同点なら優先する。
+  const RARITY_RANK = {};
+  TYPE_ORDER.forEach((id, i) => {
+    RARITY_RANK[id] = TYPE_ORDER.length - 1 - i;
+  });
+
   const state = {
     index: 0,
     answers: [], // 各設問で選んだ選択肢のindex
@@ -131,17 +138,42 @@
     return scores;
   }
 
-  function pickWinner(scores) {
-    // 最高得点。同点なら設問での選択が早かった順（出現順）で決める。
-    let best = null;
-    let bestScore = -Infinity;
-    TYPE_ORDER.forEach((id) => {
-      if (scores[id] > bestScore) {
-        bestScore = scores[id];
-        best = id;
-      }
+  // 各タイプが「シグネチャー設問(3点)」を選ばれた数を集計（通常0か1）
+  function signatureHits() {
+    const hits = {};
+    TYPE_ORDER.forEach((id) => (hits[id] = 0));
+    state.answers.forEach((optIdx, qIdx) => {
+      const opt = QUESTIONS[qIdx] && QUESTIONS[qIdx].options[optIdx];
+      if (!opt) return;
+      Object.entries(opt.scores).forEach(([id, v]) => {
+        if (v >= 3) hits[id] = (hits[id] || 0) + 1;
+      });
     });
-    return best;
+    return hits;
+  }
+
+  function pickWinner(scores) {
+    // 1) 最高得点のタイプを集める
+    let max = -Infinity;
+    TYPE_ORDER.forEach((id) => {
+      if (scores[id] > max) max = scores[id];
+    });
+    let tied = TYPE_ORDER.filter((id) => scores[id] === max);
+    if (tied.length === 1) return tied[0];
+
+    // 2) tie-break A: シグネチャー(3点)設問を選んだタイプを優先
+    //    拡散的な2点の寄せ集めより、明確な強い選択を尊重する
+    const sig = signatureHits();
+    let maxSig = -Infinity;
+    tied.forEach((id) => {
+      if (sig[id] > maxSig) maxSig = sig[id];
+    });
+    tied = tied.filter((id) => sig[id] === maxSig);
+    if (tied.length === 1) return tied[0];
+
+    // 3) tie-break B: よりレアなタイプを優先（MBTIが同点をマイノリティ側に倒すのと同じ発想）
+    tied.sort((a, b) => RARITY_RANK[a] - RARITY_RANK[b]);
+    return tied[0];
   }
 
   /* ---------- finish & loading ---------- */
