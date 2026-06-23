@@ -28,6 +28,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # コミット数からバージョンを算出するため全履歴を取得
+          fetch-depth: 0
+
+      - name: Inject build version
+        run: |
+          VER="v$(git rev-list --count HEAD)+$(git rev-parse --short HEAD)"
+          echo "Deploying version: ${VER}"
+          sed -i "s/BUILD_VERSION_PLACEHOLDER/${VER}/g" index.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

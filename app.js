@@ -39,6 +39,16 @@
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
+  /* ---------- version ---------- */
+  function showVersion() {
+    const el = document.getElementById("app-version");
+    if (!el) return;
+    let v = window.APP_VERSION;
+    // デプロイ時に置換されなかった場合（ローカル閲覧）は dev 表示
+    if (!v || v.indexOf("PLACEHOLDER") !== -1) v = "dev";
+    el.textContent = "version " + v;
+  }
+
   /* ---------- start ---------- */
   function initStart() {
     document.getElementById("q-total").textContent = QUESTIONS.length;
@@ -224,5 +234,6 @@
   }
 
   /* ---------- boot ---------- */
+  showVersion();
   initStart();
 })();
