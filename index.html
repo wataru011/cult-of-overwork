@@ -6,8 +6,16 @@
   <title>長時間労働診断 — あなたはどの長時間労働タイプ？</title>
   <meta name="description" content="16の質問に答えて、あなたの「長時間労働タイプ」を診断。全16タイプ。自己犠牲タイプ？破滅タイプ？王タイプ？MBTI風の働き方タイプ診断。" />
   <meta property="og:title" content="長時間労働診断" />
-  <meta property="og:description" content="あなたはどの長時間労働タイプ？12の質問でわかる働き方タイプ診断。" />
+  <meta property="og:description" content="あなたはどの長時間労働タイプ？質問に答えて、神々しくも禍々しいタロットカードであなたの働き方タイプを診断。" />
   <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://wataru011.github.io/longtimework/" />
+  <meta property="og:image" content="https://wataru011.github.io/longtimework/ogp.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="長時間労働診断" />
+  <meta name="twitter:description" content="あなたはどの長時間労働タイプ？タロットカードで占う働き方タイプ診断。" />
+  <meta name="twitter:image" content="https://wataru011.github.io/longtimework/ogp.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
@@ -20,8 +28,7 @@
       <div class="card start-card">
         <div class="badge">WORK STYLE TYPE</div>
         <h1 class="title">長時間労働<span>診断</span></h1>
-        <p class="subtitle">あなたはどの「長時間労働タイプ」？<br />16の質問に答えて、全16タイプから診断。</p>
-        <ul class="type-preview" id="type-preview"></ul>
+        <p class="subtitle">あなたはどの「長時間労働タイプ」？<br />質問に答えて、運命のカードを引き当てよう。</p>
         <button class="btn btn-primary" id="start-btn">診断をはじめる</button>
         <p class="note">※ この診断は娯楽目的のものです。心身の不調を感じる方は、無理をせず専門の窓口にご相談ください。</p>
       </div>
@@ -55,12 +62,10 @@
     <!-- 結果画面 -->
     <section id="screen-result" class="screen">
       <div class="card result-card" id="result-card">
-        <div class="result-emoji" id="result-emoji">🔥</div>
-        <p class="result-label">あなたは…</p>
+        <p class="result-label">あなたを表す一枚は…</p>
+        <img class="result-image" id="result-image" alt="" />
         <h2 class="result-name" id="result-name">タイプ名</h2>
         <p class="result-catch" id="result-catch">キャッチコピー</p>
-
-        <div class="result-bars" id="result-bars"></div>
 
         <p class="result-desc" id="result-desc"></p>
 

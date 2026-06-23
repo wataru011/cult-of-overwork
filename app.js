@@ -41,12 +41,6 @@
 
   /* ---------- start ---------- */
   function initStart() {
-    const preview = document.getElementById("type-preview");
-    preview.innerHTML = TYPE_ORDER.map((id) => {
-      const t = TYPES[id];
-      return `<li>${t.emoji} ${t.name}</li>`;
-    }).join("");
-
     document.getElementById("q-total").textContent = QUESTIONS.length;
     document.getElementById("start-btn").addEventListener("click", startQuiz);
     document.getElementById("retry-btn").addEventListener("click", startQuiz);
@@ -88,6 +82,10 @@
 
   function selectOption(optionIndex) {
     state.answers[state.index] = optionIndex;
+    // タップ後にフォーカス枠が残らないように外す
+    if (document.activeElement && document.activeElement.blur) {
+      document.activeElement.blur();
+    }
     // 選択フィードバックを少し見せてから次へ
     const buttons = document.querySelectorAll("#options .option");
     buttons.forEach((b, i) => b.classList.toggle("is-selected", i === optionIndex));
@@ -154,7 +152,9 @@
 
     document.documentElement.style.setProperty("--primary", t.color);
 
-    document.getElementById("result-emoji").textContent = t.emoji;
+    const img = document.getElementById("result-image");
+    img.src = "cards/" + winnerId + ".svg";
+    img.alt = t.name + "のタロットカード";
     document.getElementById("result-name").textContent = t.name;
     document.getElementById("result-catch").textContent = "“" + t.catch + "”";
     document.getElementById("result-desc").textContent = t.description;
@@ -167,7 +167,6 @@
     document.getElementById("result-compatible").innerHTML =
       `🤝 一緒にいると元気をもらえる相性タイプ<br><b>${comp.emoji} ${comp.name}</b>`;
 
-    renderBars(scores);
     state._lastType = t;
   }
 
@@ -175,34 +174,6 @@
     document.getElementById(id).innerHTML = items
       .map((x) => `<li>${x}</li>`)
       .join("");
-  }
-
-  function renderBars(scores) {
-    const max = Math.max(1, ...TYPE_ORDER.map((id) => scores[id]));
-    // 全16タイプは多いので、得点上位6タイプのみ表示する
-    const sorted = [...TYPE_ORDER]
-      .sort((a, b) => scores[b] - scores[a])
-      .slice(0, 6);
-    const box = document.getElementById("result-bars");
-    box.innerHTML = sorted
-      .map((id) => {
-        const t = TYPES[id];
-        const pct = Math.round((scores[id] / max) * 100);
-        return (
-          `<div class="bar-row">` +
-          `<span class="bar-name">${t.emoji} ${t.name}</span>` +
-          `<span class="bar-track"><span class="bar-fill" data-pct="${pct}" style="background:${t.color}"></span></span>` +
-          `<span class="bar-pct">${pct}%</span>` +
-          `</div>`
-        );
-      })
-      .join("");
-    // アニメーションのため次フレームで幅を設定
-    requestAnimationFrame(() => {
-      box.querySelectorAll(".bar-fill").forEach((el) => {
-        el.style.width = el.dataset.pct + "%";
-      });
-    });
   }
 
   /* ---------- share ---------- */

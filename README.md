@@ -50,6 +50,19 @@ python3 -m http.server 8000
 | `styles.css` | スタイル・アニメーション |
 | `data.js` | タイプ定義と設問データ |
 | `app.js` | 診断ロジック・スコアリング・シェア |
+| `cards/<id>.svg` | タイプ別タロットカード画像（結果画面に表示） |
+| `ogp.png` / `ogp.svg` | OGP画像（SNSシェア用） |
+| `tools/gen-cards.js` | カード・OGPを生成するスクリプト |
+
+### 画像の再生成
+
+タロットカードとOGPは `tools/gen-cards.js` で生成しています。
+
+```bash
+node tools/gen-cards.js          # cards/*.svg と ogp.svg を生成
+# OGPのPNG化（cairosvg を使用）
+python3 -c "import cairosvg; cairosvg.svg2png(url='ogp.svg', write_to='ogp.png', output_width=1200, output_height=630)"
+```
 
 ## 公開（GitHub Pages）
 
