@@ -478,68 +478,47 @@ CARDS.forEach((cfg) => {
 console.log("cards written:", CARDS.length);
 
 /* ---------- OGP (1200x630) ---------- */
+// スタート画面（暗い背景＋白いカード）を模したデザイン。
 function ogp() {
-  const a = AURA.mystic;
-  const feat = ["doom", "king", "whitehole"].map((id) =>
-    CARDS.find((c) => c.id === id)
-  );
-  // 中央に3つの象徴イラストを並べる（枠なし）
-  let deck = "";
-  const xs = [392, 600, 808];
-  feat.forEach((c, i) => {
-    const ca = AURA[c.aura];
-    deck += `<g transform="translate(${xs[i]} 318) scale(0.5)">
-      <g transform="translate(-300 -392)">
-        <circle cx="${CX}" cy="${CY}" r="232" fill="url(#g${i})"/>
-        <circle cx="${CX}" cy="${CY}" r="174" fill="${ca.bg1}" opacity="0.8"/>
-        <circle cx="${CX}" cy="${CY}" r="174" fill="none" stroke="${ca.accent}" stroke-width="3" opacity="0.55"/>
-        ${E[c.emblem](c.color, ca.accent)}
-      </g>
-    </g>`;
-  });
-  let grads = feat
-    .map(
-      (c, i) =>
-        `<radialGradient id="g${i}" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="${c.color}" stop-opacity="0.6"/><stop offset="100%" stop-color="${c.color}" stop-opacity="0"/></radialGradient>`
-    )
-    .join("");
-  // 星
-  const rnd = mulberry32(12345);
-  let stars = "";
-  for (let i = 0; i < 90; i++) {
-    stars += `<circle cx="${(rnd() * 1200).toFixed(0)}" cy="${(rnd() * 630).toFixed(
-      0
-    )}" r="${(rnd() * 1.6 + 0.4).toFixed(1)}" fill="#fff" opacity="${(
-      rnd() * 0.7 +
-      0.2
-    ).toFixed(2)}"/>`;
-  }
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" font-family="${FONT}">
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" font-family="IPAGothic">
   <defs>
-    <radialGradient id="obg" cx="50%" cy="40%" r="80%">
-      <stop offset="0%" stop-color="#1c1750"/><stop offset="100%" stop-color="#06040f"/>
-    </radialGradient>${grads}
+    <linearGradient id="bg" x1="0" y1="0" x2="0.25" y2="1">
+      <stop offset="0%" stop-color="#0f1226"/>
+      <stop offset="100%" stop-color="#1a1d3a"/>
+    </linearGradient>
+    <radialGradient id="pink" cx="78%" cy="2%" r="62%">
+      <stop offset="0%" stop-color="#e0518a" stop-opacity="0.42"/>
+      <stop offset="60%" stop-color="#e0518a" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="orange" cx="-2%" cy="104%" r="62%">
+      <stop offset="0%" stop-color="#f5a623" stop-opacity="0.34"/>
+      <stop offset="60%" stop-color="#f5a623" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="titleGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#e0518a"/>
+      <stop offset="100%" stop-color="#f5a623"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="22" stdDeviation="32" flood-color="#070a22" flood-opacity="0.55"/>
+    </filter>
   </defs>
-  <rect width="1200" height="630" fill="url(#obg)"/>
-  ${stars}
-  <g opacity="0.12">${(() => {
-    let r = "";
-    for (let i = 0; i < 28; i++) {
-      const ang = (Math.PI * 2 * i) / 28;
-      r += `<path d="M600 250 L${(600 + Math.cos(ang) * 1000).toFixed(0)} ${(
-        250 +
-        Math.sin(ang) * 1000
-      ).toFixed(0)} L${(600 + Math.cos(ang + 0.04) * 1000).toFixed(0)} ${(
-        250 +
-        Math.sin(ang + 0.04) * 1000
-      ).toFixed(0)} Z" fill="#9db4ff"/>`;
-    }
-    return r;
-  })()}</g>
-  ${deck}
-  <text x="600" y="120" text-anchor="middle" font-family="IPAGothic" font-size="74" font-weight="900" fill="#fff" letter-spacing="2">長時間労働診断</text>
-  <text x="600" y="560" text-anchor="middle" font-family="IPAGothic" font-size="30" font-weight="700" fill="${a.accent}" letter-spacing="2">あなたはどの長時間労働タイプ？ — 全16タイプ診断</text>
-  <rect x="14" y="14" width="1172" height="602" rx="18" fill="none" stroke="${a.accent}" stroke-width="3"/>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#pink)"/>
+  <rect width="1200" height="630" fill="url(#orange)"/>
+
+  <rect x="160" y="70" width="880" height="490" rx="40" fill="#ffffff" filter="url(#shadow)"/>
+
+  <rect x="448" y="138" width="304" height="48" rx="24" fill="#e0518a" fill-opacity="0.12"/>
+  <text x="600" y="170" text-anchor="middle" font-size="22" fill="#e0518a" letter-spacing="6">WORK STYLE TYPE</text>
+
+  <text x="504" y="332" text-anchor="middle" font-size="96" fill="#1d2030" stroke="#1d2030" stroke-width="2">長時間労働</text>
+  <text x="840" y="332" text-anchor="middle" font-size="96" fill="url(#titleGrad)" stroke="url(#titleGrad)" stroke-width="2">診断</text>
+
+  <text x="600" y="410" text-anchor="middle" font-size="33" fill="#5b6075">あなたはどの「長時間労働タイプ」？</text>
+
+  <rect x="430" y="458" width="340" height="68" rx="34" fill="url(#titleGrad)"/>
+  <text x="600" y="502" text-anchor="middle" font-size="30" fill="#ffffff" letter-spacing="2">診断をはじめる</text>
 </svg>`;
 }
 fs.writeFileSync(path.join(ROOT, "ogp.svg"), ogp().trim());

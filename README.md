@@ -60,11 +60,16 @@ python3 -m http.server 8000
 
 シンボル画像とOGPは `tools/gen-cards.js` で生成しています。
 
+OGPはスタート画面（暗い背景＋白いカード）を模したデザインです。
+
 ```bash
 node tools/gen-cards.js          # cards/*.svg と ogp.svg を生成
-# OGPのPNG化（cairosvg を使用）
-python3 -c "import cairosvg; cairosvg.svg2png(url='ogp.svg', write_to='ogp.png', output_width=1200, output_height=630)"
+# OGPのPNG化（日本語フォント込みでラスタライズ。@resvg/resvg-js を使用）
+npm i @resvg/resvg-js
+node -e "const{Resvg}=require('@resvg/resvg-js');const fs=require('fs');const r=new Resvg(fs.readFileSync('ogp.svg','utf8'),{fitTo:{mode:'width',value:1200},font:{loadSystemFonts:true,defaultFontFamily:'IPAGothic'}});fs.writeFileSync('ogp.png',r.render().asPng());"
 ```
+
+※ 日本語が描画できるフォント（例: IPAGothic）が必要です。cairosvg / rsvg-convert でも可。
 
 ## 公開（GitHub Pages）
 
