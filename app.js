@@ -209,6 +209,10 @@
     document.getElementById("result-compatible").innerHTML =
       `🤝 一緒にいると元気をもらえる相性タイプ<br><b>${comp.emoji} ${comp.name}</b>`;
 
+    const incomp = TYPES[t.incompatible];
+    document.getElementById("result-incompatible").innerHTML =
+      `⚡ 一緒だとすれ違いやすい要注意タイプ<br><b>${incomp.emoji} ${incomp.name}</b>`;
+
     state._lastType = t;
   }
 

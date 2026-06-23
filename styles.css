@@ -331,6 +331,17 @@ body {
 }
 .result-compatible b { color: var(--ink); }
 
+.result-incompatible {
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--ink-soft);
+  background: #fdf6f8;
+  border: 1px solid #f3dbe3;
+  border-radius: 14px;
+  padding: 14px;
+}
+.result-incompatible b { color: var(--ink); }
+
 .result-actions {
   margin-top: 24px;
   display: flex;
