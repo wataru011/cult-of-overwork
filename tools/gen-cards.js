@@ -445,7 +445,7 @@ const CARDS = [
   { id: "sacrifice", name: "自己犠牲タイプ", sub: "THE MARTYR", color: "#7da2ff", aura: "divine", emblem: "heart_bandage", roman: "I" },
   { id: "service", name: "社会奉仕タイプ", sub: "THE SERVANT", color: "#3fe0a0", aura: "divine", emblem: "globe", roman: "II" },
   { id: "dream", name: "無休労働理想主義者タイプ", sub: "THE UTOPIAN", color: "#ffc24b", aura: "divine", emblem: "sun", roman: "III" },
-  { id: "lover", name: "ガチ恋タイプ", sub: "THE DEVOTEE", color: "#ff77ab", aura: "ominous", emblem: "flame_heart", roman: "IV" },
+  { id: "lover", name: "純愛タイプ", sub: "THE DEVOTEE", color: "#ff77ab", aura: "ominous", emblem: "flame_heart", roman: "IV" },
   { id: "doom", name: "破滅タイプ", sub: "RUIN", color: "#b478ff", aura: "ominous", emblem: "skull", roman: "V" },
   { id: "expression", name: "自己表現タイプ", sub: "THE ARTIST", color: "#3fd3e0", aura: "mystic", emblem: "prism", roman: "VI" },
   { id: "revenge", name: "復讐タイプ", sub: "VENGEANCE", color: "#ff5b53", aura: "ominous", emblem: "flame", roman: "VII" },
