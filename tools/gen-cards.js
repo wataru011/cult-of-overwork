@@ -444,12 +444,12 @@ E.no_clock = (c, a) => {
 const CARDS = [
   { id: "sacrifice", name: "自己犠牲タイプ", sub: "THE MARTYR", color: "#7da2ff", aura: "divine", emblem: "heart_bandage", roman: "I" },
   { id: "service", name: "社会奉仕タイプ", sub: "THE SERVANT", color: "#3fe0a0", aura: "divine", emblem: "globe", roman: "II" },
-  { id: "dream", name: "無休労働理想主義者タイプ", sub: "THE UTOPIAN", color: "#ffc24b", aura: "divine", emblem: "sun", roman: "III" },
+  { id: "utopian", name: "無休労働理想主義者タイプ", sub: "THE UTOPIAN", color: "#ffc24b", aura: "divine", emblem: "sun", roman: "III" },
   { id: "lover", name: "純愛タイプ", sub: "THE DEVOTEE", color: "#ff77ab", aura: "ominous", emblem: "flame_heart", roman: "IV" },
   { id: "doom", name: "破滅タイプ", sub: "RUIN", color: "#b478ff", aura: "ominous", emblem: "skull", roman: "V" },
   { id: "expression", name: "自己表現タイプ", sub: "THE ARTIST", color: "#3fd3e0", aura: "mystic", emblem: "prism", roman: "VI" },
   { id: "revenge", name: "復讐タイプ", sub: "VENGEANCE", color: "#ff5b53", aura: "ominous", emblem: "flame", roman: "VII" },
-  { id: "companylove", name: "企業戦士タイプ", sub: "THE CORPORATE SOLDIER", color: "#5b91ff", aura: "divine", emblem: "corp_warrior", roman: "VIII" },
+  { id: "soldier", name: "企業戦士タイプ", sub: "THE CORPORATE SOLDIER", color: "#5b91ff", aura: "divine", emblem: "corp_warrior", roman: "VIII" },
   { id: "familylove", name: "家族愛タイプ", sub: "THE GUARDIAN", color: "#ffa05b", aura: "divine", emblem: "house_heart", roman: "IX" },
   { id: "lonewolf", name: "一匹狼タイプ", sub: "THE LONE WOLF", color: "#8aa0bd", aura: "ominous", emblem: "wolf", roman: "X" },
   { id: "blackhole", name: "ブラックホールタイプ", sub: "THE VOID", color: "#9b8cff", aura: "ominous", emblem: "void", roman: "XI" },
@@ -457,7 +457,7 @@ const CARDS = [
   { id: "seeker", name: "求道者タイプ", sub: "THE SEEKER", color: "#c2a37a", aura: "mystic", emblem: "mountain", roman: "XIII" },
   { id: "king", name: "王タイプ", sub: "THE KING", color: "#ffd54a", aura: "divine", emblem: "crown", roman: "XIV" },
   { id: "elf", name: "エルフタイプ", sub: "THE ELF", color: "#52d98a", aura: "mystic", emblem: "tree", roman: "XV" },
-  { id: "timetraveler", name: "アウトロータイプ", sub: "THE OUTLAW", color: "#7b7bff", aura: "mystic", emblem: "no_clock", roman: "XVI" },
+  { id: "outlaw", name: "アウトロータイプ", sub: "THE OUTLAW", color: "#7b7bff", aura: "mystic", emblem: "no_clock", roman: "XVI" },
 ];
 
 const FONT =

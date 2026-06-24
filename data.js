@@ -44,8 +44,8 @@ const TYPES = {
     compatible: "expression",
     incompatible: "lonewolf",
   },
-  dream: {
-    id: "dream",
+  utopian: {
+    id: "utopian",
     name: "無休労働理想主義者タイプ",
     emoji: "🌅",
     catch: "休みのない世界こそ、理想郷。",
@@ -96,7 +96,7 @@ const TYPES = {
       "ここまで走り抜けてきたタフさは、誰にも真似できないあなたの勲章です。極限を越えてなお前へ進める粘り強さは、大きな財産。" +
       "そのしぶとさは一生モノの強み。積み重ねた経験を胸に、これからもあなたのペースで一歩ずつ進んでいきましょう。",
     compatible: "lover",
-    incompatible: "dream",
+    incompatible: "utopian",
   },
   expression: {
     id: "expression",
@@ -132,11 +132,11 @@ const TYPES = {
     advice:
       "誰かを巻き込んででも貫きたい執念は、人を動かす凄まじいエネルギーです。その消えない炎を持っている限り、あなたは決して止まりません。" +
       "燃やし尽くすその情熱を、これからも存分に解き放っていきましょう。",
-    compatible: "dream",
+    compatible: "utopian",
     incompatible: "elf",
   },
-  companylove: {
-    id: "companylove",
+  soldier: {
+    id: "soldier",
     name: "企業戦士タイプ",
     emoji: "⚔️",
     catch: "すべては、会社のために。",
@@ -151,7 +151,7 @@ const TYPES = {
       "私情を捨ててまで組織に尽くせる忠誠心は、並大抵のものではありません。会社という大義に人生を捧げられるその覚悟こそ、あなたの強さです。" +
       "ひとりの戦士として、これからも堂々と前線を駆け抜けていきましょう。",
     compatible: "king",
-    incompatible: "timetraveler",
+    incompatible: "outlaw",
   },
   familylove: {
     id: "familylove",
@@ -258,7 +258,7 @@ const TYPES = {
     advice:
       "皆を導き、責任を背負える器は、選ばれた者だけが持つ資質です。率いる者たちのために注ぐ時間は、王としての誇りそのもの。" +
       "あなたが前を走るから、皆は安心してついていける。その統率力で、堂々と一団を率いていきましょう。",
-    compatible: "companylove",
+    compatible: "soldier",
     incompatible: "blackhole",
   },
   elf: {
@@ -276,11 +276,11 @@ const TYPES = {
     advice:
       "締め切りに動じず、長い時間軸で淡々と働き続けられるのは、得難い才能です。悠久の構えで積み上げた仕事には、深い味わいが宿ります。" +
       "その静けさは、まわりにとって大きな安心。あなたの時間軸を信じて、これからも淡々と歩み続けていきましょう。",
-    compatible: "timetraveler",
+    compatible: "outlaw",
     incompatible: "revenge",
   },
-  timetraveler: {
-    id: "timetraveler",
+  outlaw: {
+    id: "outlaw",
     name: "アウトロータイプ",
     emoji: "🏴‍☠️",
     catch: "法定労働時間？そんなものは知らない。",
@@ -294,7 +294,7 @@ const TYPES = {
       "どんな枠にもはまらない自由さは、誰にも真似できないあなただけの生き方です。ルールの外側で働けるその強さを、思うままに貫いてください。" +
       "あなたの時間は、あなたのもの。これからも自分だけの流儀で駆け抜けていきましょう。",
     compatible: "elf",
-    incompatible: "companylove",
+    incompatible: "soldier",
   },
 };
 
@@ -309,7 +309,7 @@ const QUESTIONS = [
     options: [
       { label: "自分がやらないと誰かが困るから", scores: { sacrifice: 3 } },
       { label: "この仕事には大きな意義があるから", scores: { service: 2 } },
-      { label: "世界はまだ十分に働けていないから", scores: { dream: 2 } },
+      { label: "世界はまだ十分に働けていないから", scores: { utopian: 2 } },
       { label: "好きすぎて、気づけば時間が経っているから", scores: { lover: 2 } },
       { label: "終わらせないと不安で帰れないから", scores: { doom: 2 } },
       { label: "納得いくクオリティになるまで粘りたいから", scores: { expression: 2 } },
@@ -319,7 +319,7 @@ const QUESTIONS = [
     q: "仕事中、つい口に出してしまう言葉は？",
     options: [
       { label: "「これ、世の中のためになるよね」", scores: { service: 3 } },
-      { label: "「休むなんて、間違ってる」", scores: { dream: 2 } },
+      { label: "「休むなんて、間違ってる」", scores: { utopian: 2 } },
       { label: "「やっぱり長時間労働が好き」", scores: { lover: 2 } },
       { label: "「大丈夫、まだいける…」", scores: { doom: 2 } },
       { label: "「いや、ここはこうじゃない」", scores: { expression: 2 } },
@@ -329,12 +329,12 @@ const QUESTIONS = [
   {
     q: "あなたの仕事のエンジン（原動力）は？",
     options: [
-      { label: "全人類が休まず働く理想郷の実現", scores: { dream: 3 } },
+      { label: "全人類が休まず働く理想郷の実現", scores: { utopian: 3 } },
       { label: "長時間労働への一途な愛", scores: { lover: 2 } },
       { label: "評価が下がることへの恐怖", scores: { doom: 2 } },
       { label: "自分を表現できる喜び", scores: { expression: 2 } },
       { label: "全員を巻き込んでやるという執念", scores: { revenge: 2 } },
-      { label: "会社への絶対的な忠誠", scores: { companylove: 2 } },
+      { label: "会社への絶対的な忠誠", scores: { soldier: 2 } },
     ],
   },
   {
@@ -344,7 +344,7 @@ const QUESTIONS = [
       { label: "気力が尽きて一日中寝ている", scores: { doom: 2 } },
       { label: "趣味や創作に没頭している", scores: { expression: 2 } },
       { label: "サボってる奴に差をつける鍛錬", scores: { revenge: 2 } },
-      { label: "休日でも会社の任務を遂行している", scores: { companylove: 2 } },
+      { label: "休日でも会社の任務を遂行している", scores: { soldier: 2 } },
       { label: "帰宅後の家事に全力を注いでいる", scores: { familylove: 2 } },
     ],
   },
@@ -354,7 +354,7 @@ const QUESTIONS = [
       { label: "……あれ、もう何も感じない", scores: { doom: 3 } },
       { label: "せっかくだし、とことん仕上げよう", scores: { expression: 2 } },
       { label: "この恨み、いつか晴らしてやる", scores: { revenge: 2 } },
-      { label: "会社のためなら、苦じゃない", scores: { companylove: 2 } },
+      { label: "会社のためなら、苦じゃない", scores: { soldier: 2 } },
       { label: "家に帰ったら、家事が待っている", scores: { familylove: 2 } },
       { label: "誰にも邪魔されず捗るな", scores: { lonewolf: 2 } },
     ],
@@ -364,7 +364,7 @@ const QUESTIONS = [
     options: [
       { label: "こだわりが強いセンスの人", scores: { expression: 3 } },
       { label: "何かに静かに燃えている人", scores: { revenge: 2 } },
-      { label: "会社のためなら何でもする人", scores: { companylove: 2 } },
+      { label: "会社のためなら何でもする人", scores: { soldier: 2 } },
       { label: "家でも止まらず働いている人", scores: { familylove: 2 } },
       { label: "群れない一匹狼", scores: { lonewolf: 2 } },
       { label: "仕事が吸い込まれていく人", scores: { blackhole: 2 } },
@@ -374,7 +374,7 @@ const QUESTIONS = [
     q: "深夜のオフィスで、ふと頭をよぎるのは？",
     options: [
       { label: "働いてないやつを、絶対に許さない", scores: { revenge: 3 } },
-      { label: "会社のためなら何でもできる", scores: { companylove: 2 } },
+      { label: "会社のためなら何でもできる", scores: { soldier: 2 } },
       { label: "今日も寝顔を見られなかったな…", scores: { familylove: 2 } },
       { label: "結局、自分が一番頼りになる", scores: { lonewolf: 2 } },
       { label: "タスクが、また増えていく…", scores: { blackhole: 2 } },
@@ -384,7 +384,7 @@ const QUESTIONS = [
   {
     q: "あなたにとって「会社」とは？",
     options: [
-      { label: "我が身を捧げる戦場", scores: { companylove: 3 } },
+      { label: "我が身を捧げる戦場", scores: { soldier: 3 } },
       { label: "家族を養うための場所", scores: { familylove: 2 } },
       { label: "たまたま所属している場所", scores: { lonewolf: 2 } },
       { label: "あらゆる仕事が集まってくる場所", scores: { blackhole: 2 } },
@@ -422,7 +422,7 @@ const QUESTIONS = [
       { label: "一つひとつ丁寧に極める", scores: { seeker: 2 } },
       { label: "采配して最適に配る", scores: { king: 2 } },
       { label: "慌てず、悠久の時で構える", scores: { elf: 2 } },
-      { label: "ルールを無視して片付ける", scores: { timetraveler: 2 } },
+      { label: "ルールを無視して片付ける", scores: { outlaw: 2 } },
     ],
   },
   {
@@ -432,7 +432,7 @@ const QUESTIONS = [
       { label: "磨き抜かれた確かな技術", scores: { seeker: 2 } },
       { label: "進むべき方向と決断", scores: { king: 2 } },
       { label: "どんな時も乱れない静けさ", scores: { elf: 2 } },
-      { label: "枠にとらわれない自由さ", scores: { timetraveler: 2 } },
+      { label: "枠にとらわれない自由さ", scores: { outlaw: 2 } },
       { label: "誰かを支える縁の下の力", scores: { sacrifice: 2 } },
     ],
   },
@@ -442,7 +442,7 @@ const QUESTIONS = [
       { label: "求道", scores: { seeker: 3 } },
       { label: "統率", scores: { king: 2 } },
       { label: "悠久", scores: { elf: 2 } },
-      { label: "無法", scores: { timetraveler: 2 } },
+      { label: "無法", scores: { outlaw: 2 } },
       { label: "献身", scores: { sacrifice: 2 } },
       { label: "貢献", scores: { service: 2 } },
     ],
@@ -452,30 +452,30 @@ const QUESTIONS = [
     options: [
       { label: "迷わず引き受け、皆を導く", scores: { king: 3 } },
       { label: "長い目で最善を見極める", scores: { elf: 2 } },
-      { label: "ルールを気にせず即決する", scores: { timetraveler: 2 } },
+      { label: "ルールを気にせず即決する", scores: { outlaw: 2 } },
       { label: "自分が泥をかぶる覚悟で決める", scores: { sacrifice: 2 } },
       { label: "社会にとっての正しさで決める", scores: { service: 2 } },
-      { label: "誰も休まずに済む道を選ぶ", scores: { dream: 2 } },
+      { label: "誰も休まずに済む道を選ぶ", scores: { utopian: 2 } },
     ],
   },
   {
     q: "時間や締め切りとの付き合い方は？",
     options: [
       { label: "締め切り？時はゆるやかに流れる", scores: { elf: 3 } },
-      { label: "締め切りも法定時間も知らない", scores: { timetraveler: 2 } },
+      { label: "締め切りも法定時間も知らない", scores: { outlaw: 2 } },
       { label: "自分の時間を削って間に合わせる", scores: { sacrifice: 2 } },
       { label: "意義のためなら時間は惜しまない", scores: { service: 2 } },
-      { label: "理想郷のため、休まず走り続ける", scores: { dream: 2 } },
+      { label: "理想郷のため、休まず走り続ける", scores: { utopian: 2 } },
       { label: "愛おしすぎて、つい時間を忘れる", scores: { lover: 2 } },
     ],
   },
   {
     q: "がんばった先に、いちばん見たい光景は？",
     options: [
-      { label: "ルールに縛られない自由な働き方", scores: { timetraveler: 3 } },
+      { label: "ルールに縛られない自由な働き方", scores: { outlaw: 3 } },
       { label: "笑顔で過ごす仲間や家族", scores: { sacrifice: 2 } },
       { label: "自分の仕事で良くなった社会", scores: { service: 2 } },
-      { label: "全員が休みなく働く理想の世界", scores: { dream: 2 } },
+      { label: "全員が休みなく働く理想の世界", scores: { utopian: 2 } },
       { label: "ずっと長時間労働を愛せている毎日", scores: { lover: 2 } },
       { label: "正直、まずはぐっすり眠りたい", scores: { doom: 2 } },
     ],

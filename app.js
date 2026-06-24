@@ -5,12 +5,12 @@
   const TYPE_ORDER = [
     "sacrifice",
     "service",
-    "dream",
+    "utopian",
     "lover",
     "doom",
     "expression",
     "revenge",
-    "companylove",
+    "soldier",
     "familylove",
     "lonewolf",
     "blackhole",
@@ -18,7 +18,7 @@
     "seeker",
     "king",
     "elf",
-    "timetraveler",
+    "outlaw",
   ];
 
   // 同点時のレア度ランク（小さいほどレア）。
